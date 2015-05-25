@@ -6,8 +6,12 @@ using System.Net;
 using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+// a, b, c
+using Teacher = System.Tuple<int, string, string>;
+using Subject = System.Tuple<int, string, string, System.Tuple<int, int>>;
+using Type = System.Tuple<int, string>;
 
-namespace NureTimeTable
+namespace NureSchedule
 {
     public class TimeTable
     {
@@ -57,27 +61,32 @@ namespace NureTimeTable
             return JObject.Parse(result) ["faculty"] ["directions"] [0] ["groups"].Values<JToken>();
         }
 
-        public async Task<IEnumerable<JToken>> GetSpecialityGroups( string specialituID, string facultyID, int year )
+        public async Task<IEnumerable<JToken>> GetSpecialityGroups( string specialituID, string facultyID )
         {
-            string result = await GetResult("P_API_GROUP_JSON");
-            var faculty = JObject.Parse(result)["university"]["faculties"].Values<JToken>().
-                First(fac => fac["id"].ToString() == facultyID);
-            var specialityGroups = (from dir in faculty["directions"]
-                                let specialities = dir["specialities"].Values<JToken>()
-                                let speciality = specialities.SingleOrDefault(spec => spec["id"].ToString() == specialituID)
-                                where speciality != null
-                                let groups = speciality ["groups"]
-                                from gr in groups
-                                    where gr["name"].ToString().Contains(speciality["short_name"].ToString() + "с")
-                                || gr["name"].ToString().Contains(speciality["short_name"].ToString() + "м") 
-                                || gr ["name"].ToString ().Contains ( dir ["full_name"].ToString () + "-" + GetCodeYear ( year ) )
-                                select gr).ToList ();
-            return specialityGroups;
+            string result = await GetResult("P_API_GRP_OF_SPECIALITIES_JSON?p_id_speciality=" + specialituID + "&p_id_faculty=" + facultyID);
+            var list = JObject.Parse(result)["speciality"]["groups"].Values<JToken>().ToList ();
+            return list;
         }
 
-        public async void GetSchedule(string groupID, string timeFrom = null, string timeTo = null)
+        public async Task <IEnumerable <TimeTableEvent>> GetSchedule(string groupID, string timeFrom = null, string timeTo = null)
         {
-            var result = await GetResult("P_API_EVENTS_GROUP_JSON?p_id_group=" + groupID + "&time_from=" + ToUnixTime ( DateTime.Now ) );
+            var result = await GetResult("P_API_EVENTS_GROUP_JSON?p_id_group=" + groupID );
+            var teachers = JObject.Parse(result)["teachers"].Values<JToken>().
+                Select(teacher => new Teacher((int)teacher["id"], teacher["short_name"].ToString(), teacher["full_name"].ToString())).ToList ();
+            var subjects = JObject.Parse(result)["subjects"].Values<JToken>().
+                Select(subject => new Subject ((int)subject["id"], subject["brief"].ToString(), subject ["title"].ToString (),
+                    new System.Tuple<int, int>((int)subject["hours"][0]["type"], (int)subject["hours"][0]["val"]))).ToList();
+            var types = JObject.Parse(result)["types"].Values<JToken>().
+                Select(type => new Type((int)type["id"], type["short_name"].ToString())).ToList();
+            var test = (int)JObject.Parse(result)["events"][0]["teachers"][0];
+            var list = (from timeTableEvent in JObject.Parse (result) ["events"].Values <JToken> ()
+                         let teacher = teachers.Single ( t => t.Item1 == (int)timeTableEvent ["teachers"] [0] )
+                         let subject = subjects.Single ( s => s.Item1 == (int)timeTableEvent ["subject_id"] )
+                         let type = types.Single ( t => t.Item1 == (int)timeTableEvent ["type"])
+                         let startTime = FromUnixTime ( timeTableEvent ["start_time"].ToString () )
+                         let endTime = FromUnixTime ( timeTableEvent ["end_time"].ToString () )
+                         select new TimeTableEvent ( startTime, endTime, teacher, subject, timeTableEvent["auditory"].ToString (), (int)timeTableEvent["number_pair"], type )).AsParallel ().ToList ();
+            return list;
         }
 
         public static DateTime FromUnixTime ( string unixTime )

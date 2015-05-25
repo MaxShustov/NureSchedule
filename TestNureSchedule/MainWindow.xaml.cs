@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using NureTimeTable;
+using NureSchedule;
 using Newtonsoft.Json.Linq;
 
 namespace TestNureSchedule
@@ -72,7 +72,7 @@ namespace TestNureSchedule
                 results = (await timeTable.GetDirectionGroups(direction["id"].ToString (), faculty["id"].ToString ())).
                     Where ( res => res ["name"].ToString ().Contains ( direction["short_name"].ToString () + "-" + TimeTable.GetCodeYear (year) )).ToList ();
             else
-                results = await timeTable.GetSpecialityGroups ( direction ["id"].ToString (), faculty ["id"].ToString (), year);
+                results = await timeTable.GetSpecialityGroups ( direction ["id"].ToString (), faculty ["id"].ToString ());
             foreach (var group in results)
                 groupComboBox.Items.Add(group["name"].ToString ());
             groupComboBox.IsEnabled = true;
