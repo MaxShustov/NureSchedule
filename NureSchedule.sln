@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NureSchedule", "NureSchedule\NureSchedule.csproj", "{529C1D98-2D80-4BFF-B981-A5DF04B60064}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestNureSchedule", "TestNureSchedule\TestNureSchedule.csproj", "{58F83C65-7E98-4330-AE77-EE3E46B84036}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{529C1D98-2D80-4BFF-B981-A5DF04B60064}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{529C1D98-2D80-4BFF-B981-A5DF04B60064}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{529C1D98-2D80-4BFF-B981-A5DF04B60064}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{529C1D98-2D80-4BFF-B981-A5DF04B60064}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58F83C65-7E98-4330-AE77-EE3E46B84036}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58F83C65-7E98-4330-AE77-EE3E46B84036}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58F83C65-7E98-4330-AE77-EE3E46B84036}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58F83C65-7E98-4330-AE77-EE3E46B84036}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
