@@ -17,10 +17,10 @@ namespace NureSchedule
     {
         private async Task<string> GetResult ( string requestString )
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create ( "http://cist.nure.ua/ias/app/tt/" + requestString );
-            HttpWebResponse response = ( await request.GetResponseAsync () ) as HttpWebResponse;
-            StreamReader readStream = new StreamReader ( response.GetResponseStream (), Encoding.GetEncoding ( "windows-1251" ) );
-            return await readStream.ReadToEndAsync ();
+            HttpWebRequest request = WebRequest.Create("http://cist.nure.ua/ias/app/tt/" + requestString) as HttpWebRequest;
+            using (WebResponse response = await request.GetResponseAsync())
+                using (StreamReader readStream = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding("windows-1251")))
+                    return await readStream.ReadToEndAsync();
         }
 
         public static string GetCodeYear( int year )
@@ -79,20 +79,25 @@ namespace NureSchedule
             var types = JObject.Parse(result)["types"].Values<JToken>().
                 Select(type => new Type((int)type["id"], type["short_name"].ToString())).ToList();
             var test = (int)JObject.Parse(result)["events"][0]["teachers"][0];
-            var list = (from timeTableEvent in JObject.Parse (result) ["events"].Values <JToken> ()
-                         let teacher = teachers.Single ( t => t.Item1 == (int)timeTableEvent ["teachers"] [0] )
-                         let subject = subjects.Single ( s => s.Item1 == (int)timeTableEvent ["subject_id"] )
-                         let type = types.Single ( t => t.Item1 == (int)timeTableEvent ["type"])
-                         let startTime = FromUnixTime ( timeTableEvent ["start_time"].ToString () )
-                         let endTime = FromUnixTime ( timeTableEvent ["end_time"].ToString () )
-                         select new TimeTableEvent ( startTime, endTime, teacher, subject, timeTableEvent["auditory"].ToString (), (int)timeTableEvent["number_pair"], type )).AsParallel ().ToList ();
+            List<TimeTableEvent> list = new List<TimeTableEvent>();
+            foreach (var timeTableEvent in JObject.Parse(result)["events"].Values<JToken>())
+            {
+                var tchs = from teacher in timeTableEvent["teachers"].Values <JToken> ()
+                           let fullTeacher = teachers.Single ( t => (int)teacher == t.Item1 )
+                           select fullTeacher;
+                var subject = subjects.Single(s => s.Item1 == (int)timeTableEvent["subject_id"]);
+                var type = types.Single(t => t.Item1 == (int)timeTableEvent["type"]);
+                var startTime = FromUnixTime ( timeTableEvent ["start_time"].ToString () );
+                var endTime = FromUnixTime(timeTableEvent["end_time"].ToString());
+                list.Add(new TimeTableEvent(startTime, endTime, tchs, subject, timeTableEvent["auditory"].ToString(), (int)timeTableEvent["number_pair"], type));
+            }
             return list;
         }
 
         public static DateTime FromUnixTime ( string unixTime )
         {
             var epoch = new DateTime ( 1970, 1, 1, 0, 0, 0, DateTimeKind.Utc );
-            return epoch.AddSeconds ( Convert.ToInt64 ( unixTime ) ).AddHours ( 3 );
+            return epoch.AddSeconds ( Convert.ToInt64 ( unixTime ) ).AddHours ( 2 );
         }
 
         public static string ToUnixTime ( DateTime date )

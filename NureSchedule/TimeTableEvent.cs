@@ -15,7 +15,7 @@ namespace NureSchedule
         public readonly DateTime StartTime;
         public readonly DateTime EndTime;
         //id, short_name, full_name
-        public readonly Teacher Teacher;
+        public readonly List<Teacher> Teachers;
         //id, brief, title, hours
         public readonly Subject Subject;
         public readonly string Auditory;
@@ -23,11 +23,13 @@ namespace NureSchedule
         //id, short_name
         public readonly Type Type;
 
-        public TimeTableEvent(DateTime start, DateTime end, Teacher teacher, Subject subject, string auditory, int numberOfPair, Type type)
+        public TimeTableEvent(DateTime start, DateTime end, IEnumerable<Teacher> teachers, Subject subject, string auditory, int numberOfPair, Type type)
         {
             StartTime = start;
             EndTime = end;
-            Teacher = teacher;
+            Teachers = new List<Teacher>();
+            if (teachers != null)
+                Teachers.AddRange (teachers);
             Subject = subject;
             Auditory = auditory;
             NumberOfPair = numberOfPair;
