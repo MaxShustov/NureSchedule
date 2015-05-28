@@ -77,7 +77,7 @@ namespace NureSchedule
                 Select(subject => new Subject ((int)subject["id"], subject["brief"].ToString(), subject ["title"].ToString (),
                     new System.Tuple<int, int>((int)subject["hours"][0]["type"], (int)subject["hours"][0]["val"]))).ToList();
             var types = JObject.Parse(result)["types"].Values<JToken>().
-                Select(type => new Type((int)type["id"], type["short_name"].ToString())).ToList();
+                Select(type => new System.Tuple <int, string> ( (int)type["id"], type ["type"].ToString ())).ToList();
             var test = (int)JObject.Parse(result)["events"][0]["teachers"][0];
             List<TimeTableEvent> list = new List<TimeTableEvent>();
             foreach (var timeTableEvent in JObject.Parse(result)["events"].Values<JToken>())
@@ -86,7 +86,13 @@ namespace NureSchedule
                            let fullTeacher = teachers.Single ( t => (int)teacher == t.Item1 )
                            select fullTeacher;
                 var subject = subjects.Single(s => s.Item1 == (int)timeTableEvent["subject_id"]);
-                var type = types.Single(t => t.Item1 == (int)timeTableEvent["type"]);
+                Type type = 0;
+                switch (types.Single(t => t.Item1 == (int)timeTableEvent["type"]).Item2)
+                {
+                    case "lecture": type = Type.Lecture; break;
+                    case "practice": type = Type.Practice; break;
+                    case "laboratory": type = Type.Laboratory; break;
+                }
                 var startTime = FromUnixTime ( timeTableEvent ["start_time"].ToString () );
                 var endTime = FromUnixTime(timeTableEvent["end_time"].ToString());
                 list.Add(new TimeTableEvent(startTime, endTime, tchs, subject, timeTableEvent["auditory"].ToString(), (int)timeTableEvent["number_pair"], type));

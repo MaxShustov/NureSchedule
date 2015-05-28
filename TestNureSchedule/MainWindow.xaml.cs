@@ -68,12 +68,11 @@ namespace TestNureSchedule
             directionComboBox.IsEnabled = true;
         }
 
-        async private void groupComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void groupComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (groupComboBox.SelectedIndex == -1)
                 return;
             group = groups.Single(gr => gr["name"].ToString() == groupComboBox.SelectedItem.ToString());
-            var res = await timeTable.GetSchedule( group ["id"].ToString () );
         }
 
         async private void directionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -105,6 +104,17 @@ namespace TestNureSchedule
             faculties = await timeTable.GetFaculties();
             foreach (var facult in faculties)
                 facultyComboBox.Items.Add((string)facult["short_name"]);
+        }
+
+        private async void acceptButton_Click(object sender, RoutedEventArgs e)
+        {
+            var res = (await timeTable.GetSchedule(group["id"].ToString())).ToList ();
+            var panel = new EventPanel(res[0]);
+            panel.Width = 100;
+            panel.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            panel.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            panel.Width = 200;
+            grid.Children.Add(panel);
         }
     }
 }

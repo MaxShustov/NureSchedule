@@ -8,7 +8,11 @@ namespace NureSchedule
 {
     using Teacher = System.Tuple<int, string, string>;
     using Subject = System.Tuple<int, string, string, System.Tuple<int, int>>;
-    using Type = System.Tuple<int, string>;
+
+    public enum Type
+    { 
+        Lecture, Practice, Laboratory
+    }
 
     public class TimeTableEvent
     {
