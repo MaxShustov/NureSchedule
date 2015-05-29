@@ -44,6 +44,8 @@ namespace NureSchedule
             }
             subject.Text = localEvent.Subject.Item2;
             auditory.Text = localEvent.Auditory;
+            startTime.Text = local_event.StartTime.TimeOfDay.ToString();
+            endTime.Text = local_event.EndTime.TimeOfDay.ToString();
         }
     }
 }
