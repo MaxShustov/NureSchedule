@@ -20,15 +20,15 @@ namespace NureSchedule
     /// </summary>
     public partial class DayEvents : UserControl
     {
-
         public DayEvents( List <TimeTableEvent> events )
         {
             InitializeComponent();
-            foreach (var ev in events)
+            for (int i = 0; i < 6; i++)
             {
-                var panel = new EventPanel(ev);
-                panel.SetValue(Grid.RowProperty, ev.NumberOfPair);
-                panel.SetValue(Grid.ColumnProperty, 1);
+                EventPanel panel = new EventPanel ();
+                if (events.Any(e => e.NumberOfPair == i + 1))
+                    panel = new EventPanel(events.Single(e => e.NumberOfPair == i + 1));
+                panel.SetValue(Grid.RowProperty, i);
                 grid.Children.Add(panel);
             }
         }

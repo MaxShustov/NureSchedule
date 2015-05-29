@@ -26,6 +26,11 @@ namespace NureSchedule
 
         public DateTime EndTime { get { return localEvent.EndTime; } }
 
+        public EventPanel()
+        {
+            InitializeComponent();
+        }
+
         public EventPanel( TimeTableEvent local_event )
         {
             localEvent = local_event;
@@ -44,8 +49,14 @@ namespace NureSchedule
             }
             subject.Text = localEvent.Subject.Item2;
             auditory.Text = localEvent.Auditory;
-            startTime.Text = local_event.StartTime.TimeOfDay.ToString();
-            endTime.Text = local_event.EndTime.TimeOfDay.ToString();
+            startTime.Text = local_event.StartTime.TimeOfDay.ToString(@"hh\:mm");
+            endTime.Text = local_event.EndTime.TimeOfDay.ToString(@"hh\:mm");
+        }
+
+        public void SetWidth(double width)
+        {
+            subject.Width = width;
+            auditory.Width = width;
         }
     }
 }

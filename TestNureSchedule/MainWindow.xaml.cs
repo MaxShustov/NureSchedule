@@ -112,7 +112,7 @@ namespace TestNureSchedule
             var panel = new DayEvents (res.Where((TimeTableEvent elem, int index) => { return index < 3; }).ToList());
             panel.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             panel.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
-            panel.Width = 200;
+            //panel.Width = 200;
             grid.Children.Add(panel);
         }
     }
