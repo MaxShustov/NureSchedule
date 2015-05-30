@@ -109,7 +109,8 @@ namespace TestNureSchedule
         private async void acceptButton_Click(object sender, RoutedEventArgs e)
         {
             var res = (await timeTable.GetSchedule(group["id"].ToString())).ToList ();
-            var panel = new DayEvents (res.Where((TimeTableEvent elem, int index) => { return index < 3; }).ToList());
+            var panel = new TimeTableEvents(res);
+            //var panel = new DayEvents (res.Where((TimeTableEvent elem, int index) => { return index < 3; }).ToList());
             panel.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             panel.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             //panel.Width = 200;
