@@ -4,20 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d">
-    <Grid x:Name="grid" Width="auto" Height="auto" MinWidth="150" Margin="2">
+    <Grid x:Name="grid" Width="auto" Height="auto" MinWidth="100" Margin="2">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" MinHeight="24"></RowDefinition>
             <RowDefinition Height="*" MinHeight="14"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" MinWidth="36"></ColumnDefinition>
             <ColumnDefinition Width="auto" MinWidth="100"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <TextBlock x:Name="subject" TextAlignment="Center" Grid.Column="1" HorizontalAlignment="Center"/>
-        <TextBlock x:Name="auditory" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Width="auto" TextAlignment="Center"></TextBlock>
-        <TextBlock x:Name="startTime" Margin="4, 2, 4, 2" HorizontalAlignment="Center" VerticalAlignment="Top" Width="auto" TextAlignment="Center"></TextBlock>
-        <TextBlock x:Name="endTime" Margin="4, 2, 4, 2" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Bottom" Width="auto" TextAlignment="Center"></TextBlock>
-        <Rectangle Grid.Column="1" Fill="#00F4F4F5" Stroke="Black" Grid.RowSpan="2" Margin="0,0,100,0"/>
+        <TextBlock x:Name="subject" TextAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock x:Name="auditory" Grid.Row="1" HorizontalAlignment="Center" Width="auto" TextAlignment="Center"></TextBlock>
     </Grid>
 </UserControl>

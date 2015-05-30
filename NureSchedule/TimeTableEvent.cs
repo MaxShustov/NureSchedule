@@ -11,7 +11,7 @@ namespace NureSchedule
 
     public enum Type
     { 
-        Lecture, Practice, Laboratory
+        Lecture, Practice, Laboratory, Consultation, Test, Exam
     }
 
     public class TimeTableEvent
@@ -26,6 +26,8 @@ namespace NureSchedule
         public readonly int NumberOfPair;
         //id, short_name
         public readonly Type Type;
+        public static readonly Dictionary<Type, string> NameOfType = new Dictionary<Type, string>() { {Type.Lecture, "Лк"}, {Type.Laboratory, "Лб"}, {Type.Practice, "Пз"},
+                                                                                              {Type.Exam, "Екз"}, {Type.Test, "Тест"}, {Type.Consultation, "Конс"}};
 
         public TimeTableEvent(DateTime start, DateTime end, IEnumerable<Teacher> teachers, Subject subject, string auditory, int numberOfPair, Type type)
         {

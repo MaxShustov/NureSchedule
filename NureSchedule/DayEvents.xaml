@@ -7,6 +7,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid x:Name="grid" Margin="3">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" MinWidth="36"></ColumnDefinition>
             <ColumnDefinition Width="auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -16,6 +17,14 @@
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
+        <Separator HorizontalAlignment="Stretch" Width="auto" VerticalAlignment="Top" Grid.Row="2"/>
+        <Separator HorizontalAlignment="Stretch" Width="auto" VerticalAlignment="Top" Grid.Row="3"/>
+        <Separator HorizontalAlignment="Stretch" Width="auto" VerticalAlignment="Top" Grid.Row="4"/>
+        <Separator HorizontalAlignment="Stretch" Width="auto" VerticalAlignment="Top" Grid.Row="5"/>
+        <Separator HorizontalAlignment="Stretch" Width="auto" VerticalAlignment="Top" Grid.Row="6"/>
+        <Separator HorizontalAlignment="Stretch" Width="auto" VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="1"/>
+        <Separator HorizontalAlignment="Stretch" Width="auto" VerticalAlignment="Top" Grid.Row="0" Grid.Column="1"/>
     </Grid>
 </UserControl>

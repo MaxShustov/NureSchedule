@@ -92,6 +92,9 @@ namespace NureSchedule
                     case "lecture": type = Type.Lecture; break;
                     case "practice": type = Type.Practice; break;
                     case "laboratory": type = Type.Laboratory; break;
+                    case "consultation": type = Type.Consultation; break;
+                    case "exam": type = Type.Exam; break;
+                    case "test": type = Type.Test; break;
                 }
                 var startTime = FromUnixTime ( timeTableEvent ["start_time"].ToString () );
                 var endTime = FromUnixTime(timeTableEvent["end_time"].ToString());
