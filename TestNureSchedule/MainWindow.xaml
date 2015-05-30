@@ -3,11 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="1600" Width="1600">
     <Grid x:Name="grid">
-        <ComboBox x:Name="facultyComboBox" HorizontalAlignment="Left" Margin="1462,18,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="yearComboBox" HorizontalAlignment="Left" Margin="1462,45,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="directionComboBox" HorizontalAlignment="Left" Margin="1462,72,0,0" VerticalAlignment="Top" Width="120"/>
-        <ComboBox x:Name="groupComboBox" HorizontalAlignment="Left" Margin="1462,99,0,0" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="acceptButton" Content="Accept" HorizontalAlignment="Left" Margin="1462,126,0,0" VerticalAlignment="Top" Width="120" Click="acceptButton_Click"/>
+        <ComboBox x:Name="facultyComboBox" HorizontalAlignment="Right" Margin="1462,18,20,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="yearComboBox" HorizontalAlignment="Right" Margin="1462,45,20,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="directionComboBox" HorizontalAlignment="Right" Margin="1462,72,20,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="groupComboBox" HorizontalAlignment="Right" Margin="1462,99,20,0" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="acceptButton" Content="Accept" HorizontalAlignment="Right" Margin="1462,126,20,0" VerticalAlignment="Top" Width="120" Click="acceptButton_Click"/>
 
     </Grid>
 </Window>

@@ -25,7 +25,7 @@ namespace NureSchedule
             InitializeComponent();
             for (int i = 0; i < 6; i++)
             {
-                EventPanel panel = new EventPanel ();
+                EventPanel panel = new EventPanel ( i + 1 );
                 if (events.Any(e => e.NumberOfPair == i + 1))
                     panel = new EventPanel(events.Single(e => e.NumberOfPair == i + 1));
                 panel.SetValue(Grid.RowProperty, i);
